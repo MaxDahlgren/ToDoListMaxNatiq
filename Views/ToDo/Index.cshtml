@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ToDoList.Models.TodoList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<p> <!-- Link for creating now Content with the Create().-->
+    <a asp-action="Create">What do you need to do?</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Content
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>        <!--Checkbox with small javascript snippet to toggle the ToggleIsDone().-->
+                    <input type="checkbox" checked="@item.IsDone" onclick="window.location.href = '/ToDo/ToggleIsDone/@item.Id';" />
+                @item.Content <!--Shows the content/items.-->
+            </td>
+            <td>    <!--Shows when the items were added/edited. And links for editing and deleting the content.-->
+                 @item.AddedAt.ToShortDateString()
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
